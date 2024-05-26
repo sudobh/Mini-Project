@@ -1,89 +1,206 @@
-import React from "react";
+import React,{ useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Navibar from "./Navbar";
 import Foot from "./Footer";
-import styles from "./ourCompany.module.css"
-function OurCompany(){
- const CompanyData = [
-   {
-     cname: "Bira",
-     cimg: "biralogo.png",
-     ccap: "1454",
-     cprice: "160",
-     cpe: "-3.5",
-   },
-   {
-     cname: "GKN Driveline",
-     cimg: "gknlogo.png",
-     ccap: "1754",
-     cprice: "1600",
-     cpe: "23.5",
-   },
-   {
-     cname: "Mohan Meakin",
-     cimg: "mohanlogo.jpg",
-     ccap: "1754",
-     cprice: "1490",
-     cpe: "33.5",
-   },
-   {
-     cname: "Tata Capital",
-     cimg: "tatacaplogo.png",
-     ccap: "398,288",
-     cprice: "1490",
-     cpe: "133.5",
-   },
-   {
-     cname: "NSE",
-     cimg: "nselogo.jpg",
-     ccap: "236,610",
-     cprice: "5000",
-     cpe: "32.5",
-   },
- ];
-  
-  return (
-    <>
-      <Navibar />
+import styles from "./ourCompany.module.css";
+import { CiSearch } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
+function OurCompany() {
+  const CompanyData = [
+    {
+      cname: "Bira",
+      cimg: "biralogo.png",
+      ccap: "1454",
+      cprice: "160",
+      cpe: "-3.5",
+    },
+    {
+      cname: "GKN Driveline",
+      cimg: "gknlogo.png",
+      ccap: "1754",
+      cprice: "1600",
+      cpe: "23.5",
+    },
+    {
+      cname: "Mohan Meakin",
+      cimg: "mohanlogo.jpg",
+      ccap: "1754",
+      cprice: "1490",
+      cpe: "33.5",
+    },
+    {
+      cname: "Tata Capital",
+      cimg: "tatacaplogo.png",
+      ccap: "398,288",
+      cprice: "1490",
+      cpe: "133.5",
+    },
+    {
+      cname: "NSE",
+      cimg: "nselogo.jpg",
+      ccap: "236,610",
+      cprice: "5000",
+      cpe: "32.5",
+    },
+    {
+      cname: "CSK",
+      cimg: "img3.png",
+      ccap: "5770",
+      cprice: "200/-",
+      cpe: "132.5",
+    },
+    {
+      cname: "BOAT",
+      cimg: "img2.png",
+      ccap: "23,667",
+      cprice: "500/-",
+      cpe: "32.5",
+    },
+    {
+      cname: "STUDDS",
+      cimg: "img4.png",
+      ccap: "10,000",
+      cprice: "2500/-",
+      cpe: "232.5",
+    },
+  ];
 
-      <div>
-        <div className={`${styles.headingContainer} container text-center`}>
-          <div className="row">
-            <div className="col-sm">Company</div>
-            <div className="col-sm">
-              <input type="text" />
-            </div>
-            <div className="col-sm">Market Cap</div>
-            <div className="col-sm">Current Price</div>
-            <div className="col-sm">P/E</div>
-            <div className="col-sm">Action</div>
-          </div>
+   const [username, setUsername] = useState(null);
+   const navigate = useNavigate();
+
+   useEffect(() => {
+     const storedUsername = localStorage.getItem("username");
+     if (storedUsername) {
+       setUsername(storedUsername);
+     }
+   }, []);
+
+   const handleLoginClick = () => {
+     navigate("/login");
+   };
+
+   const handleSignupClick = () => {
+     navigate("/signup");
+   };
+
+   const handleDashboardClick = () => {
+     navigate("/dashboard");
+   };
+
+   const handleLogoutClick = () => {
+     localStorage.removeItem("username");
+     localStorage.removeItem("token");
+     setUsername(null);
+     navigate("/");
+   };
+
+  return (
+    <div
+      style={{
+        backgroundColor: "#212529",
+        minHeight: "1550px",
+        color: "white",
+      }}
+    >
+      <div className={`${styles.outercontainer}`}>
+        <div className={`${styles.companynamecontainer}`}>
+          Unlisted Stock Exchange
         </div>
+        <div className={`${styles.search_bar}`}>
+          <div className={`${styles.search_icon}`}>
+            <CiSearch />
+          </div>
+          <input
+            placeholder="Search an company"
+            className={`${styles.search_input}`}
+          />
+        </div>
+        <div className={`${styles.btncontainer}`}>
+          {username ? (
+            <>
+              <Button
+                variant="outline-light"
+                className="m-1"
+                size="sm"
+                onClick={handleDashboardClick}
+              >
+                {username}
+              </Button>
+              <Button
+                variant="outline-light"
+                className="m-1"
+                size="sm"
+                onClick={handleLogoutClick}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                variant="outline-light"
+                className="m-1"
+                size="sm"
+                onClick={handleLoginClick}
+              >
+                Log In
+              </Button>
+              <Button
+                variant="outline-light"
+                className="m-1"
+                size="sm"
+                onClick={handleSignupClick}
+              >
+                Sign Up
+              </Button>
+            </>
+          )}
+        </div>
+      </div>
+      <div className={`${styles.container1}`}>
+        <u>
+          <h1 className={`${styles.heading}`}>
+            Invest in Top Unlisted Companies
+          </h1>
+        </u>
+      </div>
+      <div className={`${styles.outerrcontainer}`}>
         {CompanyData.map((data) => (
-          <div className={`${styles.companyContainer} container text-center`} key={data.cname}>
-            <div className="row">
-              <div className={` ${styles.logoContainer} col-sm`}>
-                <img src={data.cimg} alt="" className={`${styles.logo}`} />
-              </div>
-              <div className="col-sm">{data.cname}</div>
-              <div className="col-sm">&#8377;{data.ccap}</div>
-              <div className="col-sm">&#8377;{data.cprice}</div>
-              <div className="col-sm">{data.cpe}</div>
-              <div className={`${styles.action} col-sm`}>
-              <Link to={`/company/${encodeURIComponent(data.cname)}/${data.ccap}/${data.cprice}/${data.cpe}/${encodeURIComponent(data.cimg)}`} className="btn btn-success">
-                  Buy
-                </Link>
-                <button type="button" className="btn btn-warning">
-                  Warning
+          <div className={`${styles.innercontainer}`} key={data.cname}>
+            <div className={`${styles.imagecontainer}`}>
+              <img
+                src={data.cimg}
+                alt={data.cname}
+                className={`${styles.image}`}
+              />
+            </div>
+            <div>
+              <h6 className={`${styles.valuecontainer}`}>
+                Name : {data.cname}
+              </h6>
+              <h6 className={`${styles.valuecontainer}`}>
+                Market Cap(in ₹): {data.ccap}cr.
+              </h6>
+              <h6 className={`${styles.valuecontainer}`}>
+                Current Price(in ₹): {data.cprice}
+              </h6>
+              <h6 className={`${styles.valuecontainer}`}>P/E: {data.cpe}</h6>
+            </div>
+            <div>
+              <Link to="/company">
+                <button
+                  type="button"
+                  className={` ${styles.buy} btn btn-success`}
+                >
+                  Buy Now
                 </button>
-              </div>
+              </Link>
             </div>
           </div>
         ))}
       </div>
-
       <Foot />
-    </>
+    </div>
   );
 }
 export default OurCompany;
