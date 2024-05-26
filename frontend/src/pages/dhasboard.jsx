@@ -71,9 +71,9 @@ function Dashboard() {
                                         Number:{data.cnum}
                                     </Card.Text>
                                     <Card.Text>
-                                        <button variant="outline-dark">
+                                        <Button variant="outline-dark">
                                             Sell
-                                        </button>
+                                        </Button>
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
